@@ -1,0 +1,12 @@
+---
+ - name: Installing package using variable
+   hosts: all
+   become: yes
+   vars:
+    package: apache2
+   tasks:
+    - name: install pckage
+      apt:
+       name: '{{package}}'
+       state: absent
+       update_cache: yes  

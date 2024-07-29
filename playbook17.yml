@@ -1,0 +1,17 @@
+---
+ - name: delete the file if executive permission is true
+   hosts: all
+   tasks:
+     - name: Checking info about file
+       stat:
+         path: /tmp/file1
+       register: a
+     - name: Display out of file
+       debug:
+         var: a
+     - name: Delete file if execute permission is there
+       file:
+         name: /tmp/file1
+         state: absent
+       when: a.stat.executable == true    
+

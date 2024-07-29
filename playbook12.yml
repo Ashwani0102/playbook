@@ -1,0 +1,22 @@
+---
+ - name: Implementing tags
+   hosts: all
+   gather_facts: no
+   become: yes
+   tasks:
+     - name: Create user
+       user:
+         name: Rahul
+         password: Rahul
+       tags: user_creation
+     - name: Create directory
+       file:
+         name: /tmp/dir1
+         state: directory
+       tags: dir_creation
+     - name: Copy files
+       copy:
+         src: /etc/passwd
+         dest: /tmp
+
+

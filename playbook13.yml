@@ -1,0 +1,42 @@
+---
+ - name: Setup of Jenkins and Required s/w's
+   hosts: jenkinsserver
+   become: yes
+   tasks:
+     - name: Installing dependent s/w
+       apt:
+         name: "{{item.a}}"
+         state: "{{item.b}}"
+         update_cache: "{{item.c}}"
+       with_items:
+         - {a: openjdk-11-jdk,b: present,c: yes}
+         - {a: git,b: present,c: no} 
+         - {a: maven,b: present,c: no}
+     - name: Installing Jenkins
+       get_url:
+         url: https://get.jenkins.io/war-stable/2.452.3/jenkins.war
+         dest: /home/ubuntu
+ - name: Configuring tomcat and required s/w's
+   hosts: servers
+   tasks:
+     - name: Install Tomcat10 and admin
+       apt:
+         name: "{{item.a}}"
+         state: present
+         update_cache: "{{item.b}}"
+       with_items:
+         - {a: tomcat10,b: yes}
+         - {a: tomcat10-admin,b: no} 
+     - name: Copying tomcat-users.xml
+       copy:
+         src: tomcat-users.xml
+         dest: /etc/tomcat10
+       notify: restart tomcat service
+   handlers:
+     - name: restart tomcat service
+       service:
+         name: tomcat10
+         state: restarted     
+...           
+
+

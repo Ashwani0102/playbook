@@ -1,0 +1,19 @@
+---
+ - name: Working on Docker Container
+   hosts: all
+   become: yes
+   tasks:
+     - name: Create a tomcat container
+       docker_container:
+         name: webserver
+         image: tomee
+     - name: Stop the container
+       docker_container:
+         name: webserver
+         state: stopped
+     - name: Delete the container
+       docker_container:
+         name: webserver
+         state: absent  
+...           
+

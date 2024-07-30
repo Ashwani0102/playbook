@@ -1,0 +1,14 @@
+---
+ - name: Login into dockerhub and push an image
+   hosts: 172.31.4.251
+   tasks:
+     - name: Login into docker
+       docker_login:
+         username: ashwani0102
+         password: Ashwani@0102
+     - name: Push docker image
+       docker_image:
+         name: ashwani0102/jenkinsnew
+         source: local
+         push: true
+...  

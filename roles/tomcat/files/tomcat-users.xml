@@ -1,0 +1,3 @@
+<tomcate-users>
+        <user username="Ash" password="ash" roles="manager-scripts"/>
+</tomcate-users>
